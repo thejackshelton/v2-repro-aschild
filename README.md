@@ -1,65 +1,63 @@
-# Qwik City App ⚡️
+### Which component is affected?
 
-- [Qwik Docs](https://qwik.dev/)
-- [Discord](https://qwik.dev/chat)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+Qwik Runtime
 
----
+### Describe the bug
 
-## Project Structure
+When using the asChild prop on a component, specifically in prod, the checkbox breaks (indicator no longer shows and hides)
 
-This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
+Not sure what asChild is? Read more about it here:
 
-Inside your project, you'll see the following directory structure:
+https://qwik.design/contributing/composition/#what-is-aschild
 
-```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
+isolating the issue:
+
+1. It works in production again after removing the aria-checked element, which seems to be using the isCheckedSig that changes on click:
+
+```tsx
+ aria-checked={context.isCheckedSig.value}
 ```
 
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.dev/qwikcity/routing/overview/) for more info.
 
-- `src/components`: Recommended directory for components.
 
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
+### Reproduction
 
-## Add Integrations and deployment
+https://github.com/thejackshelton/v2-repro-aschild/
 
-Use the `pnpm qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.dev/qwikcity/guides/static-site-generation/).
+### Steps to reproduce
+
+Reproduction steps:
+
+1. pnpm i && pnpm preview
+2. notice that the checkbox does not check or toggle, and there is an error from qwik core in the console
+
+working behavior:
+
+1. run dev mode
+2. notice that it is toggling in dev mode
+
+### System Info
 
 ```shell
-pnpm qwik add # or `pnpm qwik add`
+System:
+    OS: macOS 15.1
+    CPU: (16) arm64 Apple M4 Max
+    Memory: 2.26 GB / 48.00 GB
+    Shell: 5.9 - /bin/zsh
+  Binaries:
+    Node: 20.12.2 - /usr/local/bin/node
+    Yarn: 1.22.22 - /usr/local/bin/yarn
+    npm: 10.5.0 - /usr/local/bin/npm
+    pnpm: 9.5.0 - /usr/local/bin/pnpm
+    bun: 1.1.7 - ~/.bun/bin/bun
+  Browsers:
+    Safari: 18.1
+  npmPackages:
+    typescript: 5.4.5 => 5.4.5 
+    undici: * => 7.4.0 
+    vite: 5.3.5 => 5.3.5
 ```
 
-## Development
+### Additional Information
 
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
-
-```shell
-npm start # or `pnpm start`
-```
-
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
-
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
-
-```shell
-pnpm preview # or `pnpm preview`
-```
-
-## Production
-
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
-
-```shell
-pnpm build # or `pnpm build`
-```
+_No response_

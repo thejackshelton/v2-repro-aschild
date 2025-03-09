@@ -10,6 +10,8 @@ Not sure what asChild is? Read more about it here:
 
 https://qwik.design/contributing/composition/#what-is-aschild
 
+> I think asChild makes a lot of sense to be part of the framework, as it is a powerful primitive that enables the ability for consumers to provide their own JSX. Currently, we need to create an inline component for each component that supports asChild.
+
 isolating the issue:
 
 1. It works in production again after removing the aria-checked element, which seems to be using the isCheckedSig that changes on click:
